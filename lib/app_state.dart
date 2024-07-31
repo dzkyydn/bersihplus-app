@@ -31,4 +31,28 @@ class FFAppState extends ChangeNotifier {
   set userTransactionsLongest(dynamic value) {
     _userTransactionsLongest = value;
   }
+
+  dynamic _userTransactions;
+  dynamic get userTransactions => _userTransactions;
+  set userTransactions(dynamic value) {
+    _userTransactions = value;
+  }
+
+  dynamic _getItem;
+  dynamic get getItem => _getItem;
+  set getItem(dynamic value) {
+    _getItem = value;
+  }
+
+  dynamic _userEmailList;
+  dynamic get userEmailList => _userEmailList;
+  set userEmailList(dynamic value) {
+    _userEmailList = value;
+  }
+
+  dynamic _userTransfers;
+  dynamic get userTransfers => _userTransfers;
+  set userTransfers(dynamic value) {
+    _userTransfers = value;
+  }
 }

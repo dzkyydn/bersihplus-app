@@ -73,19 +73,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const LandingPageWidget(),
+          appStateNotifier.loggedIn ? const LandingPageWidget() : const LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? const HomePageWidget()
-              : const LandingPageWidget(),
+              ? const LandingPageWidget()
+              : const LoginPageWidget(),
         ),
         FFRoute(
           name: 'HomePage',
           path: '/homePage',
-          builder: (context, params) => const HomePageWidget(),
+          builder: (context, params) => HomePageWidget(
+            balance: params.getParam(
+              'balance',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'RegisterPage',
@@ -108,11 +113,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const PageWidget(),
         ),
         FFRoute(
-          name: 'WalletPage',
-          path: '/walletPage',
-          builder: (context, params) => const WalletPageWidget(),
-        ),
-        FFRoute(
           name: 'SettingPage',
           path: '/settingPage',
           builder: (context, params) => const SettingPageWidget(),
@@ -131,6 +131,161 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'TransferPage',
           path: '/transferPage',
           builder: (context, params) => const TransferPageWidget(),
+        ),
+        FFRoute(
+          name: 'TransferReceiptPage',
+          path: '/transferReceiptPage',
+          builder: (context, params) => TransferReceiptPageWidget(
+            invoiceImage: params.getParam(
+              'invoiceImage',
+              ParamType.String,
+            ),
+            message: params.getParam(
+              'message',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'TransferProcessPage',
+          path: '/transferProcessPage',
+          builder: (context, params) => TransferProcessPageWidget(
+            senderUIDProcess: params.getParam(
+              'senderUIDProcess',
+              ParamType.String,
+            ),
+            receiverUIDProcess: params.getParam(
+              'receiverUIDProcess',
+              ParamType.String,
+            ),
+            amountProcess: params.getParam(
+              'amountProcess',
+              ParamType.String,
+            ),
+            notesProcess: params.getParam(
+              'notesProcess',
+              ParamType.String,
+            ),
+            passwordProcess: params.getParam(
+              'passwordProcess',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'ItemsPage',
+          path: '/itemsPage',
+          builder: (context, params) => const ItemsPageWidget(),
+        ),
+        FFRoute(
+          name: 'TransferListPage',
+          path: '/transferListPage',
+          builder: (context, params) => const TransferListPageWidget(),
+        ),
+        FFRoute(
+          name: 'DonationPage',
+          path: '/donationPage',
+          builder: (context, params) => const DonationPageWidget(),
+        ),
+        FFRoute(
+          name: 'DonationProcessPage',
+          path: '/donationProcessPage',
+          builder: (context, params) => DonationProcessPageWidget(
+            senderUIDProcess: params.getParam(
+              'senderUIDProcess',
+              ParamType.String,
+            ),
+            amountProcess: params.getParam(
+              'amountProcess',
+              ParamType.String,
+            ),
+            notesProcess: params.getParam(
+              'notesProcess',
+              ParamType.String,
+            ),
+            passwordProcess: params.getParam(
+              'passwordProcess',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'DonationReceiptPage',
+          path: '/donationReceiptPage',
+          builder: (context, params) => DonationReceiptPageWidget(
+            invoiceImage: params.getParam(
+              'invoiceImage',
+              ParamType.String,
+            ),
+            message: params.getParam(
+              'message',
+              ParamType.JSON,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'TransactionPageCopy',
+          path: '/transactionPageCopy',
+          builder: (context, params) => const TransactionPageCopyWidget(),
+        ),
+        FFRoute(
+          name: 'TransferReceiptShowPage',
+          path: '/transferReceiptShowPage',
+          builder: (context, params) => TransferReceiptShowPageWidget(
+            invoiceImage: params.getParam(
+              'invoiceImage',
+              ParamType.String,
+            ),
+            transferId: params.getParam(
+              'transferId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'HomePageCopy',
+          path: '/homePageCopy',
+          builder: (context, params) => HomePageCopyWidget(
+            balance: params.getParam(
+              'balance',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'TransactionPageCopy2',
+          path: '/transactionPageCopy2',
+          builder: (context, params) => const TransactionPageCopy2Widget(),
+        ),
+        FFRoute(
+          name: 'HomePageCopy2',
+          path: '/homePageCopy2',
+          builder: (context, params) => HomePageCopy2Widget(
+            balance: params.getParam(
+              'balance',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'HomePageCopy3',
+          path: '/homePageCopy3',
+          builder: (context, params) => HomePageCopy3Widget(
+            balance: params.getParam(
+              'balance',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'HomePageWalkthrough',
+          path: '/homePageWalkthrough',
+          builder: (context, params) => HomePageWalkthroughWidget(
+            balance: params.getParam(
+              'balance',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -301,7 +456,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/landingPage';
+            return '/loginPage';
           }
           return null;
         },
@@ -385,4 +540,14 @@ class RootPageContext {
         value: RootPageContext(true, errorRoute),
         child: child,
       );
+}
+
+extension GoRouterLocationExtension on GoRouter {
+  String getCurrentLocation() {
+    final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
+    final RouteMatchList matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    return matchList.uri.toString();
+  }
 }

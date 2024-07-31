@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Bersih Plus</string>
+	<string>bersihPlus</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Bersih Plus</string>
+	<string>bersihPlus</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 
@@ -44,10 +44,7 @@
 
 	<key>NSFaceIDUsageDescription</key>
     <string>This app requires permissions to perform a biometric verification.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>Aplikasi ini membutuhkan data lokasi anda</string>
-	<key>NSContactsUsageDescription</key>
-    <string>Aplikasi ini membutuhkan data kontak anda</string>
+
 
 
 	<key>UILaunchStoryboardName</key>

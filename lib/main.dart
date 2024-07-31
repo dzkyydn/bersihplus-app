@@ -39,10 +39,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   ThemeMode _themeMode = ThemeMode.system;
 
-  late Stream<BersihPlusAuthUser> userStream;
-
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
+
+  late Stream<BersihPlusAuthUser> userStream;
 
   @override
   void initState() {
@@ -51,10 +51,12 @@ class _MyAppState extends State<MyApp> {
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = bersihPlusAuthUserStream()
-      ..listen((user) => _appStateNotifier.update(user));
+      ..listen((user) {
+        _appStateNotifier.update(user);
+      });
 
     Future.delayed(
-      const Duration(milliseconds: 1000),
+      const Duration(milliseconds: 3000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
@@ -66,7 +68,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Bersih Plus',
+      title: 'bersihPlus',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -76,11 +78,11 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         brightness: Brightness.light,
         scrollbarTheme: ScrollbarThemeData(
-          thumbColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.dragged)) {
+          thumbColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.dragged)) {
               return const Color(0x00ffffff);
             }
-            if (states.contains(MaterialState.hovered)) {
+            if (states.contains(WidgetState.hovered)) {
               return const Color(0x00ffffff);
             }
             return const Color(0x00ffffff);
